@@ -1,10 +1,10 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { navigatorTheme } from "./src/config/navigatorTheme";
 import MusicsScreen from "./src/features/music/MusicsScreen";
-import VideosScreen from "./src/features/video/VideosScreen";
+import SearchScreen from "./src/features/search/SearchScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,8 +17,8 @@ export default function App() {
           name="Musics"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
-              <MaterialCommunityIcons
-                name={focused ? "music-box" : "music-box-outline"}
+              <Ionicons
+                name={focused ? "musical-note" : "musical-note-outline"}
                 color={color}
                 size={size}
               />
@@ -26,12 +26,12 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          component={VideosScreen}
-          name="Videos"
+          component={SearchScreen}
+          name="Search"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
-              <MaterialCommunityIcons
-                name={focused ? "video" : "video-outline"}
+              <Ionicons
+                name={focused ? "search" : "search-outline"}
                 color={color}
                 size={size}
               />
