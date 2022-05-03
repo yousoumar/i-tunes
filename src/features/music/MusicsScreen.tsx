@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
+import { useGetPokemonByNameQuery } from "../../services/musics";
 import MusicPreview from "./MusicPreview";
 import { addMussic } from "./musicSlice";
 
@@ -12,6 +13,8 @@ interface Props {}
 const MusicsScreen: FC<Props> = (props) => {
   const musics = useAppSelector((state: RootState) => state.musicList);
   const dispatch = useAppDispatch();
+  const { data, error, isLoading } = useGetPokemonByNameQuery("bulbasaur");
+  console.log(data);
   return (
     <Screen>
       <Button title="test" onPress={() => dispatch(addMussic(2))} />

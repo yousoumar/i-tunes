@@ -8,7 +8,6 @@ import { navigatorTheme } from "./src/config/navigatorTheme";
 import MusicsScreen from "./src/features/music/MusicsScreen";
 import PlayerScrren from "./src/features/player/PlayerScrren";
 import SearchScreen from "./src/features/search/SearchScreen";
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
