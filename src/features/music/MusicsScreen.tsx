@@ -1,16 +1,20 @@
-import React, { FC, useState } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import React, { FC } from "react";
+import { Button, FlatList, StyleSheet, Text } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
+import { RootState } from "../../app/store";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
 import MusicPreview from "./MusicPreview";
+import { addMussic } from "./musicSlice";
 
 interface Props {}
 
 const MusicsScreen: FC<Props> = (props) => {
-  const [musics, setMusics] = useState<any>([]);
-
+  const musics = useAppSelector((state: RootState) => state.musicList);
+  const dispatch = useAppDispatch();
   return (
     <Screen>
+      <Button title="test" onPress={() => dispatch(addMussic(2))} />
       <FlatList
         data={musics}
         renderItem={({ item }) => <MusicPreview music={item} />}
