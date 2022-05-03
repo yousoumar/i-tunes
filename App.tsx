@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { navigatorTheme } from "./src/config/navigatorTheme";
 import MusicsScreen from "./src/features/music/MusicsScreen";
+import PlayerScrren from "./src/features/player/PlayerScrren";
 import SearchScreen from "./src/features/search/SearchScreen";
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,20 @@ export default function App() {
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
-                name={focused ? "musical-note" : "musical-note-outline"}
+                name={focused ? "headset" : "headset-outline"}
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          component={PlayerScrren}
+          name="Player"
+          options={{
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? "play-circle" : "play-circle-outline"}
                 color={color}
                 size={size}
               />
