@@ -10,6 +10,10 @@ export const musicList = createSlice({
     addMusicToList: (state, action: PayloadAction<any>) => {
       state.musicList.push(action.payload);
     },
+    removeMusicFromList: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      state.musicList = state.musicList.filter((m: any) => m.trackId !== action.payload);
+    },
     setPlayingMusic: (state, action: PayloadAction<any>) => {
       state.playingMusic = action.payload;
     },
@@ -17,6 +21,6 @@ export const musicList = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addMusicToList, setPlayingMusic } = musicList.actions;
+export const { addMusicToList, setPlayingMusic, removeMusicFromList } = musicList.actions;
 
 export default musicList.reducer;

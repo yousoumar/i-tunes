@@ -1,9 +1,10 @@
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import React, { FC, useEffect, useState } from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch } from "../../app/hooks/hooks";
 import colors from "../../config/colors";
-import { addMusicToList, setPlayingMusic } from "./musicSlice";
+import { addMusicToList, removeMusicFromList, setPlayingMusic } from "./musicSlice";
 
 interface Props {
   music: any;
@@ -31,15 +32,29 @@ const MusicPreview: FC<Props> = ({ music }) => {
   return (
     <View style={styles.container}>
       <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
-      <Text style={styles.text}>{music.trackCensoredName}</Text>
-      <Button
-        title="Play"
-        onPress={() => {
-          playSound();
-          dispatch(setPlayingMusic(music));
-        }}
-      />
-      <Button title="Add" onPress={() => dispatch(addMusicToList(music))} />
+      <Text style={styles.text}>
+        {music.trackName.length > 30 ? music.trackName.substring(0, 27) + "..." : music.trackName}
+      </Text>
+      <View style={styles.buttons}>
+        {music.inTheList ? (
+          <Pressable onPress={() => dispatch(removeMusicFromList(music.trackId))}>
+            <Ionicons name="remove-circle" size={25} color="black" />
+          </Pressable>
+        ) : (
+          <Pressable onPress={() => dispatch(addMusicToList({ ...music, inTheList: true }))}>
+            <AntDesign name="pluscircle" size={24} color="black" />
+          </Pressable>
+        )}
+        <Pressable
+          style={styles.rightButton}
+          onPress={() => {
+            playSound();
+            dispatch(setPlayingMusic({ ...music, playing: true }));
+          }}
+        >
+          <AntDesign name="play" size={24} color={colors.primary} />
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -60,6 +75,13 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 3,
+  },
+  buttons: {
+    marginLeft: "auto",
+    flexDirection: "row",
+  },
+  rightButton: {
+    marginLeft: 16,
   },
 });
 
