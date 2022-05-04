@@ -2,21 +2,22 @@ import React, { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput } from "react-native";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
-import MusicPreview from "../music/MusicPreview";
+import { useGetMusiscBySearchKeywordQuery } from "../../services/music";
+import MusicPreview from "./MusicPreview";
 
 interface Props {}
 
 const SearchScreen: FC<Props> = (props) => {
   const [searchText, setSearchText] = useState("");
   const [musics, setMusics] = useState<any>([]);
+
+  const { data, error, isLoading } = useGetMusiscBySearchKeywordQuery(searchText);
+
   useEffect(() => {
-    fetch(
-      `https://itunes.apple.com/search?term=${searchText}&limit=14&media=music`
-    )
-      .then((res) => res.json())
-      .then((data) => setMusics(data.results))
-      .catch((e) => console.log(e));
-  }, [searchText]);
+    if (data) {
+      setMusics(data.results);
+    }
+  }, [data]);
 
   return (
     <Screen>
@@ -30,13 +31,7 @@ const SearchScreen: FC<Props> = (props) => {
         data={musics}
         renderItem={({ item }) => <MusicPreview music={item} />}
         keyExtractor={(item) => item.previewUrl}
-        ListEmptyComponent={() =>
-          searchText ? (
-            <Text>No matching result</Text>
-          ) : (
-            <Text>Search songs, artistes...</Text>
-          )
-        }
+        ListEmptyComponent={() => (searchText ? <Text>No matching result</Text> : <></>)}
       />
     </Screen>
   );

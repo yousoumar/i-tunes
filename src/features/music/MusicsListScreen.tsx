@@ -1,23 +1,18 @@
 import React, { FC } from "react";
-import { Button, FlatList, StyleSheet, Text } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
+import { FlatList, StyleSheet, Text } from "react-native";
+import { useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
-import { useGetPokemonByNameQuery } from "../../services/musics";
 import MusicPreview from "./MusicPreview";
-import { addMussic } from "./musicSlice";
 
 interface Props {}
 
-const MusicsScreen: FC<Props> = (props) => {
-  const musics = useAppSelector((state: RootState) => state.musicList);
-  const dispatch = useAppDispatch();
-  const { data, error, isLoading } = useGetPokemonByNameQuery("bulbasaur");
-  console.log(data);
+const MusicsListScreen: FC<Props> = (props) => {
+  const musics = useAppSelector((state: RootState) => state.music.musicList);
+
   return (
     <Screen>
-      <Button title="test" onPress={() => dispatch(addMussic(2))} />
       <FlatList
         data={musics}
         renderItem={({ item }) => <MusicPreview music={item} />}
@@ -39,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MusicsScreen;
+export default MusicsListScreen;

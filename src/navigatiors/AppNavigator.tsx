@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React, { FC } from "react";
 import { navigatorTheme } from "../config/navigatorTheme";
-import MusicsScreen from "../features/music/MusicsScreen";
-import PlayerScrren from "../features/player/PlayerScrren";
-import SearchScreen from "../features/search/SearchScreen";
+import MusicsListScreen from "../features/music/MusicsListScreen";
+import PlayerScreen from "../features/music/PlayerScreen";
+import SearchScreen from "../features/music/SearchScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,20 +14,16 @@ const AppNavigator: FC = () => {
     <NavigationContainer theme={navigatorTheme}>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen
-          component={MusicsScreen}
+          component={MusicsListScreen}
           name="Musics"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons
-                name={focused ? "headset" : "headset-outline"}
-                color={color}
-                size={size}
-              />
+              <Ionicons name={focused ? "headset" : "headset-outline"} color={color} size={size} />
             ),
           }}
         />
         <Tab.Screen
-          component={PlayerScrren}
+          component={PlayerScreen}
           name="Player"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
@@ -44,11 +40,7 @@ const AppNavigator: FC = () => {
           name="Search"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons
-                name={focused ? "search" : "search-outline"}
-                color={color}
-                size={size}
-              />
+              <Ionicons name={focused ? "search" : "search-outline"} color={color} size={size} />
             ),
           }}
         />

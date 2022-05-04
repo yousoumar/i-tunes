@@ -1,7 +1,9 @@
 import { Audio } from "expo-av";
 import React, { FC, useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text } from "react-native";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { useAppDispatch } from "../../app/hooks/hooks";
 import colors from "../../config/colors";
+import { addMusicToList, setPlayingMusic } from "./musicSlice";
 
 interface Props {
   music: any;
@@ -9,6 +11,7 @@ interface Props {
 
 const MusicPreview: FC<Props> = ({ music }) => {
   const [sound, setSound] = useState<Audio.Sound>();
+  const dispatch = useAppDispatch();
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync({ uri: music.previewUrl });
@@ -26,10 +29,18 @@ const MusicPreview: FC<Props> = ({ music }) => {
   }, [sound]);
 
   return (
-    <Pressable style={styles.container} onPress={playSound}>
+    <View style={styles.container}>
       <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
       <Text style={styles.text}>{music.trackCensoredName}</Text>
-    </Pressable>
+      <Button
+        title="Play"
+        onPress={() => {
+          playSound();
+          dispatch(setPlayingMusic(music));
+        }}
+      />
+      <Button title="Add" onPress={() => dispatch(addMusicToList(music))} />
+    </View>
   );
 };
 

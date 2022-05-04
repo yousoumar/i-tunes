@@ -2,19 +2,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 //export interface MusicList {}
 
-const initialState: any[] = [];
+const initialState: any = { musicList: [], playingMusic: null };
 export const musicList = createSlice({
-  name: "musicList",
+  name: "music",
   initialState,
   reducers: {
-    addMussic: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
-      //state.push(actions.payload);
+    addMusicToList: (state, action: PayloadAction<any>) => {
+      state.musicList.push(action.payload);
+    },
+    setPlayingMusic: (state, action: PayloadAction<any>) => {
+      state.playingMusic = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addMussic } = musicList.actions;
+export const { addMusicToList, setPlayingMusic } = musicList.actions;
 
 export default musicList.reducer;
