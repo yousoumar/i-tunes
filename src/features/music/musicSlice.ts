@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //export interface MusicList {}
 
 const initialState: any = { musicList: [], playingMusic: null };
-export const musicList = createSlice({
+export const music = createSlice({
   name: "music",
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ export const musicList = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addMusicToList, setPlayingMusic, removeMusicFromList } = musicList.actions;
+export const { addMusicToList, setPlayingMusic, removeMusicFromList } = music.actions;
 
-export default musicList.reducer;
+export default music.reducer;

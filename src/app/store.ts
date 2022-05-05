@@ -1,17 +1,28 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import musicListSlicer from "../features/music/musicSlice";
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import musicReducer from "../features/music/musicSlice";
 import { musicApi } from "../services/music";
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+};
+
+const reducers = combineReducers({
+  music: musicReducer,
+  [musicApi.reducerPath]: musicApi.reducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {
-    music: musicListSlicer,
-    // Add the generated reducer as a specific top-level slice
-    [musicApi.reducerPath]: musicApi.reducer,
-    // Adding the api middleware enables caching, invalidation, polling,
-    // and other useful features of `rtk-query`.
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(musicApi.middleware),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(musicApi.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
