@@ -1,6 +1,5 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { Audio } from "expo-av";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch } from "../../app/hooks/hooks";
 import colors from "../../config/colors";
@@ -11,23 +10,7 @@ interface Props {
 }
 
 const MusicPreview: FC<Props> = ({ music }) => {
-  const [sound, setSound] = useState<Audio.Sound>();
   const dispatch = useAppDispatch();
-  async function playSound() {
-    console.log("Loading Sound");
-    const { sound } = await Audio.Sound.createAsync({ uri: music.previewUrl });
-    setSound(sound);
-    await sound.playAsync();
-  }
-
-  useEffect(() => {
-    return sound
-      ? () => {
-          console.log("Unloading Sound");
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
 
   return (
     <View style={styles.container}>
@@ -48,7 +31,6 @@ const MusicPreview: FC<Props> = ({ music }) => {
         <Pressable
           style={styles.rightButton}
           onPress={() => {
-            playSound();
             dispatch(setPlayingMusic({ ...music, playing: true }));
           }}
         >
