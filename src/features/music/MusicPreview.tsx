@@ -1,9 +1,10 @@
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { FC } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch } from "../../app/hooks/hooks";
 import colors from "../../config/colors";
-import { addMusicToList, removeMusicFromList, setPlayingMusic } from "./musicSlice";
+import { addMusicToList, removeMusicFromList } from "./musicSlice";
+import PlayPauseButton from "./PlayPauseButton";
 
 interface Props {
   music: any;
@@ -21,21 +22,14 @@ const MusicPreview: FC<Props> = ({ music }) => {
       <View style={styles.buttons}>
         {music.inTheList ? (
           <Pressable onPress={() => dispatch(removeMusicFromList(music.trackId))}>
-            <Ionicons name="remove-circle" size={25} color="black" />
+            <MaterialCommunityIcons name="delete-circle-outline" size={26} color="black" />
           </Pressable>
         ) : (
           <Pressable onPress={() => dispatch(addMusicToList({ ...music, inTheList: true }))}>
             <AntDesign name="pluscircle" size={24} color="black" />
           </Pressable>
         )}
-        <Pressable
-          style={styles.rightButton}
-          onPress={() => {
-            dispatch(setPlayingMusic({ ...music, playing: true }));
-          }}
-        >
-          <AntDesign name="play" size={24} color={colors.primary} />
-        </Pressable>
+        <PlayPauseButton music={music} style={styles.rightButton} />
       </View>
     </View>
   );

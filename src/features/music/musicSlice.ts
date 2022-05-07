@@ -8,10 +8,10 @@ export const music = createSlice({
   initialState,
   reducers: {
     addMusicToList: (state, action: PayloadAction<any>) => {
-      state.musicList.push(action.payload);
+      !state.musicList.find((m: any) => m.previewUrl === action.payload.previewUrl) &&
+        state.musicList.push(action.payload);
     },
     removeMusicFromList: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
       state.musicList = state.musicList.filter((m: any) => m.trackId !== action.payload);
     },
     setPlayingMusic: (state, action: PayloadAction<any>) => {

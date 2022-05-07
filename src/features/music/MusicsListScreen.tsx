@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import { FlatList } from "react-native";
 import { useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import Screen from "../../components/Screen";
-import colors from "../../config/colors";
+import Empty from "./Empty";
 import MusicPreview from "./MusicPreview";
 
 interface Props {}
@@ -17,21 +17,11 @@ const MusicsListScreen: FC<Props> = (props) => {
         data={musics}
         renderItem={({ item }) => <MusicPreview music={item} />}
         keyExtractor={(item) => item.previewUrl}
-        ListEmptyComponent={() => <Text>No music added in your library</Text>}
+        ListEmptyComponent={() => <Empty text="No music added in your library :(" />}
+        contentContainerStyle={{ flexGrow: 1 }}
       />
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    backgroundColor: colors.gray,
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 16,
-    color: colors.black,
-    marginHorizontal: 10,
-  },
-});
 
 export default MusicsListScreen;
