@@ -1,4 +1,4 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { FC } from "react";
 import { Image, Pressable, PressableProps, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
@@ -13,10 +13,19 @@ interface Props extends PressableProps {
 const MusicPreview: FC<Props> = ({ music }) => {
   const dispatch = useAppDispatch();
   const musics = useAppSelector((state: RootState) => state.music.musicList);
-
+  const playingMusic = useAppSelector((state: RootState) => state.music.playingMusic);
   return (
     <Pressable style={styles.container} onPress={() => dispatch(setPlayingMusic({ ...music }))}>
-      <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
+      <View>
+        <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
+        {playingMusic?.trackId === music.trackId ? (
+          <View style={styles.playingIcon}>
+            <Entypo name="bar-graph" size={24} color="white" />
+          </View>
+        ) : (
+          <></>
+        )}
+      </View>
       <Text style={styles.text}>
         {music.trackName.length > 30 ? music.trackName.substring(0, 27) + "..." : music.trackName}
       </Text>
@@ -58,6 +67,15 @@ const styles = StyleSheet.create({
   },
   rightButton: {
     marginLeft: 16,
+  },
+  playingIcon: {
+    position: "absolute",
+    backgroundColor: "rgba(0,0,0,0.6)",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
   },
 });
 
