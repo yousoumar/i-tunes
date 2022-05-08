@@ -38,7 +38,12 @@ const SearchScreen: FC<Props> = () => {
           <Ionicons name="list-circle-outline" size={44} color="black" />
         </Pressable>
       </View>
-      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+      <Modal
+        statusBarTranslucent={true}
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Pressable
@@ -109,7 +114,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: "white",
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     marginTop: "auto",
     padding: 35,
     alignItems: "center",
