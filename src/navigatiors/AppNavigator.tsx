@@ -13,10 +13,7 @@ const AppNavigator: FC = () => {
     <NavigationContainer theme={navigatorTheme}>
       <Tab.Navigator
         screenOptions={{
-          headerTitleAlign: "left",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
+          headerShown: false,
         }}
       >
         <Tab.Screen
@@ -33,7 +30,6 @@ const AppNavigator: FC = () => {
           component={SearchScreen}
           name="Search"
           options={{
-            headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons name={focused ? "search" : "search-outline"} color={color} size={size} />
             ),

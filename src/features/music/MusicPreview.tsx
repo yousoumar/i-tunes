@@ -1,37 +1,37 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { FC } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useAppDispatch } from "../../app/hooks/hooks";
+import { Image, Pressable, PressableProps, StyleSheet, Text, View } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
+import { RootState } from "../../app/store";
 import colors from "../../config/colors";
-import { addMusicToList, removeMusicFromList } from "./musicSlice";
-import PlayPauseButton from "./PlayPauseButton";
+import { addMusicToList, Music, removeMusicFromList, setPlayingMusic } from "./musicSlice";
 
-interface Props {
-  music: any;
+interface Props extends PressableProps {
+  music: Music;
 }
 
 const MusicPreview: FC<Props> = ({ music }) => {
   const dispatch = useAppDispatch();
+  const musics = useAppSelector((state: RootState) => state.music.musicList);
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => dispatch(setPlayingMusic({ ...music }))}>
       <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
       <Text style={styles.text}>
         {music.trackName.length > 30 ? music.trackName.substring(0, 27) + "..." : music.trackName}
       </Text>
       <View style={styles.buttons}>
-        {music.inTheList ? (
+        {musics.find((m: Music) => m.previewUrl === music.previewUrl) ? (
           <Pressable onPress={() => dispatch(removeMusicFromList(music.trackId))}>
             <MaterialCommunityIcons name="delete-circle-outline" size={26} color="black" />
           </Pressable>
         ) : (
-          <Pressable onPress={() => dispatch(addMusicToList({ ...music, inTheList: true }))}>
+          <Pressable onPress={() => dispatch(addMusicToList(music))}>
             <AntDesign name="pluscircle" size={24} color="black" />
           </Pressable>
         )}
-        <PlayPauseButton music={music} style={styles.rightButton} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 

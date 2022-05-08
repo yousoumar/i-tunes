@@ -5,12 +5,13 @@ import colors from "../../config/colors";
 import { useGetMusiscBySearchKeywordQuery } from "../../services/music";
 import Empty from "./Empty";
 import MusicPreview from "./MusicPreview";
+import { Music } from "./musicSlice";
 
 interface Props {}
 
 const SearchScreen: FC<Props> = (props) => {
   const [searchText, setSearchText] = useState("");
-  const [musics, setMusics] = useState<any>([]);
+  const [musics, setMusics] = useState<Music[]>([]);
 
   const { data, isFetching } = useGetMusiscBySearchKeywordQuery(searchText);
 

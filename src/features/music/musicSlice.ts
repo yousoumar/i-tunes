@@ -1,20 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-//export interface MusicList {}
+export interface Music {
+  artworkUrl100: string;
+  previewUrl: string;
+  trackName: string;
+  trackId: string;
+}
 
-const initialState: any = { musicList: [], playingMusic: null };
+interface MusicSlice {
+  musicList: Music[];
+  playingMusic: Music | null;
+}
+
+const initialState: MusicSlice = { musicList: [], playingMusic: null };
 export const music = createSlice({
   name: "music",
   initialState,
   reducers: {
-    addMusicToList: (state, action: PayloadAction<any>) => {
-      !state.musicList.find((m: any) => m.previewUrl === action.payload.previewUrl) &&
+    addMusicToList: (state, action: PayloadAction<Music>) => {
+      !state.musicList.find((m: Music) => m.previewUrl === action.payload.previewUrl) &&
         state.musicList.push(action.payload);
     },
-    removeMusicFromList: (state, action: PayloadAction<any>) => {
-      state.musicList = state.musicList.filter((m: any) => m.trackId !== action.payload);
+    removeMusicFromList: (state, action: PayloadAction<string>) => {
+      state.musicList = state.musicList.filter((m: Music) => m.trackId !== action.payload);
     },
-    setPlayingMusic: (state, action: PayloadAction<any>) => {
+    setPlayingMusic: (state, action: PayloadAction<Music>) => {
       state.playingMusic = action.payload;
     },
   },
