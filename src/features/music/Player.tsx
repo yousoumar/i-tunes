@@ -20,6 +20,7 @@ const Player: FC<Props> = ({ style }) => {
 
   async function playSound() {
     setIsLoading(true);
+    await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
     const { sound } = await Audio.Sound.createAsync({ uri: playingMusic!.previewUrl });
     sound.setOnPlaybackStatusUpdate(async (status) => {
       if (!status.isLoaded) {
