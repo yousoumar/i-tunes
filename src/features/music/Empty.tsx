@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import colors from "../../config/colors";
 
 interface Props {
   text: string;
@@ -19,10 +18,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    padding: 16,
   },
   text: {
-    color: colors.primary,
-    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

@@ -25,6 +25,7 @@ export const music = createSlice({
       state.musicList = state.musicList.filter((m: Music) => m.trackId !== action.payload);
     },
     setPlayingMusic: (state, action: PayloadAction<Music>) => {
+      console.log(action.payload);
       state.playingMusic = action.payload;
     },
   },
