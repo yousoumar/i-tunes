@@ -26,7 +26,7 @@
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "description": "A minimalist Apple Media mobile application clone made with React Native, Redux, and TypeScript, to query, listen, and store musics & podcasts from iTunes API.",
+    "description": "A minimalist iTunes mobile application clone made with React Native, Redux, and TypeScript, to query, listen, and store musics & podcasts from iTunes API.",
     "githubUrl": "https://github.com/yousoumar/i-tunes"
   }
 }
