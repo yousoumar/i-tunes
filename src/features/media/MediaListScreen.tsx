@@ -6,14 +6,16 @@ import colors from "../../config/colors";
 import Empty from "./Empty";
 import Filter from "./Filter";
 import MediaPreview from "./MediaPreview";
-import { getFilter, getFiltredMediaWithSearch } from "./mediaSlice";
+import { getFilter, getFiltredMediaList, getFiltredMediaWithSearch } from "./mediaSlice";
 import Player from "./Player";
 
 interface Props {}
 
 const MediaListScreen: FC<Props> = (props) => {
   const [searchText, setSearchText] = useState("");
+  const filtredMediaList = useAppSelector(getFiltredMediaList);
   const mediaList = useAppSelector(getFiltredMediaWithSearch(searchText));
+  const mediaListIsEmpty = filtredMediaList.length > 0;
   const filter = useAppSelector(getFilter);
   return (
     <Screen>
@@ -34,7 +36,15 @@ const MediaListScreen: FC<Props> = (props) => {
         data={mediaList}
         renderItem={({ item }) => <MediaPreview media={item} />}
         keyExtractor={(item) => JSON.stringify(item)}
-        ListEmptyComponent={() => <Empty text="No media added in your library :(" />}
+        ListEmptyComponent={() => (
+          <Empty
+            text={
+              !mediaListIsEmpty
+                ? `No media added in your local ${filter} list :(`
+                : `No matching result in your local ${filter} list :(`
+            }
+          />
+        )}
         contentContainerStyle={{ flexGrow: 1 }}
       />
       <Player />
