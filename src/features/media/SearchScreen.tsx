@@ -30,7 +30,6 @@ const SearchScreen: FC<Props> = () => {
     <Screen>
       <View style={styles.topbar}>
         <TextInput
-          autoFocus={true}
           autoCorrect={false}
           autoCapitalize="none"
           placeholderTextColor={colors.black}
