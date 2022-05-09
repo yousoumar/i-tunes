@@ -38,6 +38,7 @@ const Player: FC<Props> = () => {
     setSound(sound);
     await sound.playAsync();
   }
+
   async function pauseSound() {
     sound?.pauseAsync();
     setIsPlaying(false);
@@ -55,6 +56,7 @@ const Player: FC<Props> = () => {
   }, [playingMedia]);
 
   if (!playingMedia) return <></>;
+
   return (
     <View style={styles.container}>
       <Image style={styles.img} source={{ uri: playingMedia.artworkUrl100 }} />

@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import mediaReducer from "../features/media/mediaSlice";
 import { mediaApi } from "../services/media";
+
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
@@ -25,11 +26,8 @@ export const store = configureStore({
     }).concat(mediaApi.middleware),
 });
 
-// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
-// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 setupListeners(store.dispatch);
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+
 export type AppDispatch = typeof store.dispatch;

@@ -4,12 +4,14 @@ import { Modal, Pressable, StyleSheet, Text, View, ViewProps } from "react-nativ
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import colors from "../../config/colors";
 import { changeFilter, getFilter } from "./mediaSlice";
+
 interface Props extends ViewProps {}
 
 const Filter: FC<Props> = ({ style }) => {
   const filter = useAppSelector(getFilter);
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={[styles.container, style]}>
       <Pressable onPress={() => setModalVisible((modalVisible) => !modalVisible)}>

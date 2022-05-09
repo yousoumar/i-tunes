@@ -14,9 +14,10 @@ interface Props {}
 const MediaListScreen: FC<Props> = (props) => {
   const [searchText, setSearchText] = useState("");
   const filtredMediaList = useAppSelector(getFiltredMediaList);
-  const mediaList = useAppSelector(getFiltredMediaWithSearch(searchText));
+  const filtredWithSearchMediaList = useAppSelector(getFiltredMediaWithSearch(searchText));
   const mediaListIsEmpty = filtredMediaList.length > 0;
   const filter = useAppSelector(getFilter);
+
   return (
     <Screen>
       <View style={styles.topbar}>
@@ -33,7 +34,7 @@ const MediaListScreen: FC<Props> = (props) => {
       </View>
       <FlatList
         style={styles.flatList}
-        data={mediaList}
+        data={filtredWithSearchMediaList}
         renderItem={({ item }) => <MediaPreview media={item} />}
         keyExtractor={(item) => JSON.stringify(item)}
         ListEmptyComponent={() => (

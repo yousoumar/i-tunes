@@ -18,8 +18,9 @@ interface Props extends PressableProps {
 
 const MediaPreview: FC<Props> = ({ media }) => {
   const dispatch = useAppDispatch();
-  const medias = useAppSelector(getMediaList);
+  const mediaList = useAppSelector(getMediaList);
   const playingMedia = useAppSelector((state: RootState) => state.media.playingMedia);
+
   return (
     <View style={styles.container}>
       <View>
@@ -46,7 +47,7 @@ const MediaPreview: FC<Props> = ({ media }) => {
         ) : (
           <></>
         )}
-        {medias.find((m: Media) => JSON.stringify(m) === JSON.stringify(media)) ? (
+        {mediaList.find((m: Media) => JSON.stringify(m) === JSON.stringify(media)) ? (
           <Pressable onPress={() => dispatch(removeMediaFromList(media.trackId))}>
             <MaterialCommunityIcons name="delete-circle-outline" size={26} color="black" />
           </Pressable>
