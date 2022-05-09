@@ -26,9 +26,9 @@ const Player: FC<Props> = () => {
       if (!status.isLoaded) {
         console.log("loading...");
       } else {
-        setIsLoading(false);
         if (status.isPlaying) {
           setIsPlaying(true);
+          setIsLoading(false);
         }
         if (status.didJustFinish === true) {
           setIsPlaying(false);
