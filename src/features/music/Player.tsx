@@ -9,7 +9,7 @@ import { addMusicToList, Music } from "./musicSlice";
 
 interface Props extends ViewProps {}
 
-const Player: FC<Props> = ({ style }) => {
+const Player: FC<Props> = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [sound, setSound] = useState<Audio.Sound>();
@@ -54,7 +54,7 @@ const Player: FC<Props> = ({ style }) => {
 
   if (!playingMusic) return <></>;
   return (
-    <View style={[styles.container, style]}>
+    <View style={styles.container}>
       <Image style={styles.img} source={{ uri: playingMusic.artworkUrl100 }} />
       <Text style={styles.text}>
         {playingMusic.trackName.length > 30

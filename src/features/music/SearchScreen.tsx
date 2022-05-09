@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   topbar: {
     flexDirection: "row",
     alignItems: "center",
+    paddingTop: 5,
   },
   input: {
     backgroundColor: colors.gray,
