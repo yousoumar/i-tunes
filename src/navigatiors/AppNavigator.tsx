@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React, { FC } from "react";
 import { navigatorTheme } from "../config/navigatorTheme";
-import MusicsListScreen from "../features/music/MusicsListScreen";
-import SearchScreen from "../features/music/SearchScreen";
+import MediaListScreen from "../features/media/MediaListScreen";
+import SearchScreen from "../features/media/SearchScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,8 +17,8 @@ const AppNavigator: FC = () => {
         }}
       >
         <Tab.Screen
-          component={MusicsListScreen}
-          name="Musics"
+          component={MediaListScreen}
+          name="Medias"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons name={focused ? "headset" : "headset-outline"} color={color} size={size} />

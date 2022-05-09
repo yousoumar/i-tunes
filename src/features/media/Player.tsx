@@ -5,7 +5,7 @@ import { Image, Pressable, StyleSheet, Text, View, ViewProps } from "react-nativ
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import colors from "../../config/colors";
-import { addMusicToList, Music } from "./musicSlice";
+import { addMediaToList, Media, setPlayingMedia } from "./mediaSlice";
 
 interface Props extends ViewProps {}
 
@@ -14,14 +14,14 @@ const Player: FC<Props> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [sound, setSound] = useState<Audio.Sound>();
   const fristLoadRef = useRef(true);
-  const playingMusic = useAppSelector((state) => state.music.playingMusic);
+  const playingMedia = useAppSelector((state) => state.media.playingMedia);
   const dispatch = useAppDispatch();
-  const musics = useAppSelector((state: RootState) => state.music.musicList);
+  const mediaList = useAppSelector((state: RootState) => state.media.mediaList);
 
   async function playSound() {
     setIsLoading(true);
     await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-    const { sound } = await Audio.Sound.createAsync({ uri: playingMusic!.previewUrl });
+    const { sound } = await Audio.Sound.createAsync({ uri: playingMedia!.previewUrl });
     sound.setOnPlaybackStatusUpdate(async (status) => {
       if (!status.isLoaded) {
         console.log("loading...");
@@ -49,22 +49,26 @@ const Player: FC<Props> = () => {
       return;
     }
     pauseSound();
-    playSound();
-  }, [playingMusic]);
+    if (playingMedia) {
+      playSound();
+    }
+  }, [playingMedia]);
 
-  if (!playingMusic) return <></>;
+  if (!playingMedia) return <></>;
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={{ uri: playingMusic.artworkUrl100 }} />
+      <Image style={styles.img} source={{ uri: playingMedia.artworkUrl100 }} />
       <Text style={styles.text}>
-        {playingMusic.trackName.length > 30
-          ? playingMusic.trackName.substring(0, 27) + "..."
-          : playingMusic.trackName}
+        {playingMedia.trackName.length > 30
+          ? playingMedia.trackName.substring(0, 27) + "..."
+          : playingMedia.trackName}
       </Text>
-
-      {!musics.find((m: Music) => m.previewUrl === playingMusic.previewUrl) ? (
+      <Pressable onPress={() => dispatch(setPlayingMedia(null))}>
+        <AntDesign name="close" size={26} color={colors.white} style={{ marginRight: 10 }} />
+      </Pressable>
+      {!mediaList.find((m: Media) => m.previewUrl === playingMedia.previewUrl) ? (
         <Pressable
-          onPress={() => dispatch(addMusicToList(playingMusic))}
+          onPress={() => dispatch(addMediaToList(playingMedia))}
           style={{ marginRight: 16 }}
         >
           <AntDesign name="pluscircle" size={24} color={colors.white} />

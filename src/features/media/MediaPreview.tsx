@@ -4,21 +4,27 @@ import { Image, Pressable, PressableProps, StyleSheet, Text, View } from "react-
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import colors from "../../config/colors";
-import { addMusicToList, Music, removeMusicFromList, setPlayingMusic } from "./musicSlice";
+import {
+  addMediaToList,
+  getMediaList,
+  Media,
+  removeMediaFromList,
+  setPlayingMedia,
+} from "./mediaSlice";
 
 interface Props extends PressableProps {
-  music: Music;
+  media: Media;
 }
 
-const MusicPreview: FC<Props> = ({ music }) => {
+const MediaPreview: FC<Props> = ({ media }) => {
   const dispatch = useAppDispatch();
-  const musics = useAppSelector((state: RootState) => state.music.musicList);
-  const playingMusic = useAppSelector((state: RootState) => state.music.playingMusic);
+  const medias = useAppSelector(getMediaList);
+  const playingMedia = useAppSelector((state: RootState) => state.media.playingMedia);
   return (
-    <Pressable style={styles.container} onPress={() => dispatch(setPlayingMusic({ ...music }))}>
+    <View style={styles.container}>
       <View>
-        <Image style={styles.img} source={{ uri: music.artworkUrl100 }} />
-        {playingMusic?.trackId === music.trackId ? (
+        <Image style={styles.img} source={{ uri: media.artworkUrl100 }} />
+        {playingMedia?.trackId === media.trackId ? (
           <View style={styles.playingIcon}>
             <Entypo name="bar-graph" size={24} color="white" />
           </View>
@@ -27,20 +33,30 @@ const MusicPreview: FC<Props> = ({ music }) => {
         )}
       </View>
       <Text style={styles.text}>
-        {music.trackName.length > 30 ? music.trackName.substring(0, 27) + "..." : music.trackName}
+        {media.trackName.length > 30 ? media.trackName.substring(0, 27) + "..." : media.trackName}
       </Text>
       <View style={styles.buttons}>
-        {musics.find((m: Music) => m.previewUrl === music.previewUrl) ? (
-          <Pressable onPress={() => dispatch(removeMusicFromList(music.trackId))}>
+        {JSON.stringify(playingMedia) !== JSON.stringify(media) && media.kind == "song" ? (
+          <Pressable
+            style={styles.leftButton}
+            onPress={() => dispatch(setPlayingMedia({ ...media }))}
+          >
+            <AntDesign name="playcircleo" size={24} color={colors.black} />
+          </Pressable>
+        ) : (
+          <></>
+        )}
+        {medias.find((m: Media) => JSON.stringify(m) === JSON.stringify(media)) ? (
+          <Pressable onPress={() => dispatch(removeMediaFromList(media.trackId))}>
             <MaterialCommunityIcons name="delete-circle-outline" size={26} color="black" />
           </Pressable>
         ) : (
-          <Pressable onPress={() => dispatch(addMusicToList(music))}>
+          <Pressable onPress={() => dispatch(addMediaToList(media))}>
             <AntDesign name="pluscircle" size={24} color="black" />
           </Pressable>
         )}
       </View>
-    </Pressable>
+    </View>
   );
 };
 
@@ -65,8 +81,8 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     flexDirection: "row",
   },
-  rightButton: {
-    marginLeft: 16,
+  leftButton: {
+    marginRight: 10,
   },
   playingIcon: {
     position: "absolute",
@@ -79,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MusicPreview;
+export default MediaPreview;

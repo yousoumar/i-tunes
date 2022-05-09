@@ -3,16 +3,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import musicReducer from "../features/music/musicSlice";
-import { musicApi } from "../services/music";
+import mediaReducer from "../features/media/mediaSlice";
+import { mediaApi } from "../services/media";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
 };
 
 const reducers = combineReducers({
-  music: musicReducer,
-  [musicApi.reducerPath]: musicApi.reducer,
+  media: mediaReducer,
+  [mediaApi.reducerPath]: mediaApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -22,7 +22,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(musicApi.middleware),
+    }).concat(mediaApi.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
