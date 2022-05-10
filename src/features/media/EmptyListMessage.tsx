@@ -2,13 +2,13 @@ import React, { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 interface Props {
-  text: string;
+  message: string;
 }
 
-const Empty: FC<Props> = ({ text }) => {
+const EmptyListMessage: FC<Props> = ({ message }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}>{message}</Text>
     </View>
   );
 };
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Empty;
+export default EmptyListMessage;

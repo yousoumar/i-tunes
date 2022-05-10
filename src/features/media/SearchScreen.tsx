@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 import { useAppSelector } from "../../app/hooks/hooks";
 import Screen from "../../components/Screen";
 import { useGetMediaBySearchKeywordQuery } from "../../services/media";
-import Empty from "./Empty";
+import EmptyListMessage from "./EmptyListMessage";
 import MediaPreview from "./MediaPreview";
 import { getFilter, Media } from "./mediaSlice";
 import Topbar from "./Topbar";
@@ -37,9 +37,11 @@ const SearchScreen: FC = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={() =>
           searchText ? (
-            <Empty text={isFetching ? "Loading..." : "No matching result :)"} />
+            <EmptyListMessage message={isFetching ? "Loading..." : "No matching result :)"} />
           ) : (
-            <Empty text={`Search for musics and podcasts. Chosen media type is "${filter}".`} />
+            <EmptyListMessage
+              message={`Search for musics and podcasts. Chosen media type is "${filter}".`}
+            />
           )
         }
       />

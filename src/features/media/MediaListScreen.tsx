@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { FlatList } from "react-native";
 import { useAppSelector } from "../../app/hooks/hooks";
 import Screen from "../../components/Screen";
-import Empty from "./Empty";
+import EmptyListMessage from "./EmptyListMessage";
 import MediaPreview from "./MediaPreview";
 import { getFilter, getFiltredMediaList, getFiltredMediaWithSearch } from "./mediaSlice";
 import Player from "./Player";
@@ -27,8 +27,8 @@ const MediaListScreen: FC = () => {
         renderItem={({ item }) => <MediaPreview media={item} />}
         keyExtractor={(item) => JSON.stringify(item)}
         ListEmptyComponent={() => (
-          <Empty
-            text={
+          <EmptyListMessage
+            message={
               !mediaListIsEmpty
                 ? `No media added in your local ${filter} list :(`
                 : `No matching result in your local ${filter} list :(`
