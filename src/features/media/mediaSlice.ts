@@ -25,8 +25,10 @@ export const media = createSlice({
       state.mediaList.push(action.payload);
     },
 
-    removeMediaFromList: (state, action: PayloadAction<string>) => {
-      state.mediaList = state.mediaList.filter((m: Media) => m.trackId !== action.payload);
+    removeMediaFromList: (state, action: PayloadAction<Media>) => {
+      state.mediaList = state.mediaList.filter(
+        (m: Media) => JSON.stringify(m) !== JSON.stringify(action.payload)
+      );
     },
 
     setPlayingMedia: (state, action: PayloadAction<Media | null>) => {

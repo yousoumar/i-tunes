@@ -48,7 +48,7 @@ const MediaPreview: FC<Props> = ({ media }) => {
           <></>
         )}
         {mediaList.find((m: Media) => JSON.stringify(m) === JSON.stringify(media)) ? (
-          <Pressable onPress={() => dispatch(removeMediaFromList(media.trackId))}>
+          <Pressable onPress={() => dispatch(removeMediaFromList(media))}>
             <MaterialCommunityIcons name="delete-circle-outline" size={26} color="black" />
           </Pressable>
         ) : (
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   leftButton: {
-    marginRight: 10,
+    marginRight: 20,
   },
   playingIcon: {
     position: "absolute",

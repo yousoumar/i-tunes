@@ -66,13 +66,10 @@ const Player: FC<Props> = () => {
           : playingMedia.trackName}
       </Text>
       <Pressable onPress={() => dispatch(setPlayingMedia(null))}>
-        <AntDesign name="close" size={26} color={colors.white} style={{ marginRight: 10 }} />
+        <AntDesign name="close" size={26} color={colors.white} style={styles.leftButton} />
       </Pressable>
       {!mediaList.find((m: Media) => m.previewUrl === playingMedia.previewUrl) ? (
-        <Pressable
-          onPress={() => dispatch(addMediaToList(playingMedia))}
-          style={{ marginRight: 16 }}
-        >
+        <Pressable onPress={() => dispatch(addMediaToList(playingMedia))} style={styles.leftButton}>
           <AntDesign name="pluscircle" size={24} color={colors.white} />
         </Pressable>
       ) : (
@@ -117,6 +114,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 3,
+  },
+  leftButton: {
+    marginRight: 20,
   },
 });
 
