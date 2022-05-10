@@ -1,9 +1,7 @@
 import { FC } from "react";
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 
-interface Props {}
-
-const Screen: FC<Props> = ({ children }) => {
+const Screen: FC = ({ children }) => {
   return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
 };
 

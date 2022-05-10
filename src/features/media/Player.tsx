@@ -1,15 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { RootState } from "../../app/store";
 import colors from "../../config/colors";
 import { addMediaToList, Media, setPlayingMedia } from "./mediaSlice";
 
-interface Props extends ViewProps {}
-
-const Player: FC<Props> = () => {
+const Player: FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [sound, setSound] = useState<Audio.Sound>();
